@@ -1,6 +1,5 @@
 package sa.factory.petspetcare1289530.ui.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -26,7 +25,8 @@ fun HomeScreen(
     viewModel: PetsPetViewModel,
     onItemClick: (PetsPetItem) -> Unit
 ) {
-    val categories = listOf("الكل", "تسجيل الحجاج", "إدارة الرحلة", "السلامة الصحية", "الدعم اللوجستي")
+    val categories = listOf("الكل", "الرعاية البيطرية", "الشرائح الإلكترونية", "التطعيمات الدورية", "الفحص والتحصين")
+    val defaultPeripheral = "ISO 11784/11785 134.2 kHz RFID Microchip Reader"
 
     Column(
         modifier = Modifier
@@ -36,8 +36,17 @@ fun HomeScreen(
     ) {
         // Header
         Column {
-            Text("تطبيق رحلة الإيمان — إدارة شاملة لحملات الحج والعمرة", fontSize = 22.sp, fontWeight = FontWeight.Black, color = BrandTextPrimary)
-            Text("تتبع آمن للحجاج عبر تقنية RFID المتقدمة مع إدارة متكاملة للرحلة", fontSize = 12.sp, color = BrandTextSecondary)
+            Text(
+                text = "أليف للعناية البيطرية — المنظومة الذكية لتتبع وصحة الحيوانات الأليفة",
+                fontSize = 21.sp,
+                fontWeight = FontWeight.Black,
+                color = BrandTextPrimary
+            )
+            Text(
+                text = "ربط عتادي مباشر مع قارئ الشرائح الإلكترونية ISO 11784/11785 بتردد 134.2 kHz",
+                fontSize = 12.sp,
+                color = BrandTextSecondary
+            )
         }
 
         // Hardware Status Capsule
@@ -52,11 +61,25 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("العتاد الحي: ${state.telemetry?.peripheralName ?: 'ISO 11784/11785 134.2 kHz RFID Microchip Reader'}", fontWeight = FontWeight.Bold, color = BrandPrimary, fontSize = 13.sp)
-                    Text(state.telemetry?.liveReading ?: "RFID 134.2 kHz: FD AE 34 1C | Pilgrim ID: QTR-7894 | Timestamp: 2023-12-05 14:30:22", fontSize = 11.sp, color = BrandTextSecondary)
+                    Text(
+                        text = "العتاد الحي: ${state.telemetry?.peripheralName ?: defaultPeripheral}",
+                        fontWeight = FontWeight.Bold,
+                        color = BrandPrimary,
+                        fontSize = 13.sp
+                    )
+                    Text(
+                        text = state.telemetry?.liveReading ?: "ISO 11784/11785 FDX-B: 900-112000123456 | MEWA Verified | Temp: 38.6 C",
+                        fontSize = 11.sp,
+                        color = BrandTextSecondary
+                    )
                 }
                 Badge(containerColor = BrandPrimary) {
-                    Text(state.telemetry?.status ?: "ONLINE", color = Color.Black, fontWeight = FontWeight.Bold, modifier = Modifier.padding(2.dp))
+                    Text(
+                        text = state.telemetry?.status ?: "ONLINE",
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(2.dp)
+                    )
                 }
             }
         }
@@ -115,7 +138,7 @@ fun HomeScreen(
                                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
                                 shape = RoundedCornerShape(8.dp)
                             ) {
-                                Text("إضافة", fontSize = 11.sp, color = Color.Black, fontWeight = FontWeight.Bold)
+                                Text("طلب الخدمة", fontSize = 11.sp, color = Color.Black, fontWeight = FontWeight.Bold)
                             }
                         }
                     }

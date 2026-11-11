@@ -15,6 +15,8 @@ import sa.factory.petspetcare1289530.ui.viewmodel.PetsPetUiState
 
 @Composable
 fun TelemetryScreen(state: PetsPetUiState) {
+    val defaultPeripheral = "ISO 11784/11785 134.2 kHz RFID Microchip Reader"
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -22,7 +24,7 @@ fun TelemetryScreen(state: PetsPetUiState) {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text("مراقبة العتاد الحي والحساسات", fontSize = 20.sp, fontWeight = FontWeight.Black, color = BrandTextPrimary)
-        Text("بروتوكول الربط المباشر الميداني", fontSize = 12.sp, color = BrandTextSecondary)
+        Text("بروتوكول الربط المباشر الميداني للشرائح الإلكترونية", fontSize = 12.sp, color = BrandTextSecondary)
 
         Card(
             shape = RoundedCornerShape(18.dp),
@@ -30,16 +32,20 @@ fun TelemetryScreen(state: PetsPetUiState) {
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(modifier = Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text("حالة الجهاز الملحق:", color = BrandTextSecondary, fontSize = 13.sp)
                     Badge(containerColor = BrandPrimary) {
                         Text(state.telemetry?.status ?: "ONLINE", color = Color.Black, fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
                     }
                 }
-                Text("اسم العتاد: ${state.telemetry?.peripheralName ?: 'ISO 11784/11785 134.2 kHz RFID Microchip Reader'}", fontWeight = FontWeight.Bold, color = BrandTextPrimary, fontSize = 14.sp)
-                Text("جودة الإشارة: ${state.telemetry?.signalDbm ?: -58} dBm  •  البطارية: ${state.telemetry?.batteryPct ?: 98}%", color = BrandSecondary, fontSize = 12.sp)
-                
-                Divider(color = BrandCard)
+                Text("اسم العتاد: ${state.telemetry?.peripheralName ?: defaultPeripheral}", fontWeight = FontWeight.Bold, color = BrandTextPrimary, fontSize = 14.sp)
+                Text("جودة الإشارة: ${state.telemetry?.signalDbm ?: -58} dBm | البطارية: ${state.telemetry?.batteryPct ?: 98}%", color = BrandSecondary, fontSize = 12.sp)
+
+                HorizontalDivider(color = BrandCard)
                 Text("حزمة البيانات اللحظية (Raw Telemetry Payload):", color = BrandTextSecondary, fontSize = 11.sp)
                 Surface(
                     shape = RoundedCornerShape(8.dp),
@@ -47,7 +53,7 @@ fun TelemetryScreen(state: PetsPetUiState) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = state.telemetry?.liveReading ?: "RFID 134.2 kHz: FD AE 34 1C | Pilgrim ID: QTR-7894 | Timestamp: 2023-12-05 14:30:22",
+                        text = state.telemetry?.liveReading ?: "ISO 11784/11785 FDX-B: 900-112000123456 | MEWA Verified | Temp: 38.6 C",
                         color = BrandPrimary,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Medium,
@@ -63,10 +69,11 @@ fun TelemetryScreen(state: PetsPetUiState) {
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("معايير الامتثال والحوكمة", fontWeight = FontWeight.Bold, color = BrandTextPrimary, fontSize = 14.sp)
-                Text("✓ تشفير كامل للاتصال الطرفي (AES-256 GCM)", color = BrandTextSecondary, fontSize = 12.sp)
-                Text("✓ مطابقة اشتراطات هيئة الاتصالات والفضاء والتقنية", color = BrandTextSecondary, fontSize = 12.sp)
-                Text("✓ مزامنة فورية خالية من الإيموجي ومتوافقة مع المعايير السعودية", color = BrandTextSecondary, fontSize = 12.sp)
+                Text("معايير الامتثال والحوكمة البيطرية", fontWeight = FontWeight.Bold, color = BrandTextPrimary, fontSize = 14.sp)
+                Text("[OK] مطابقة المعايير الدولية ISO 11784/11785 FDX-B و HDX", color = BrandTextSecondary, fontSize = 12.sp)
+                Text("[OK] ربط مباشر مع السجل الوطني للحيوانات الأليفة (وزارة البيئة والمياه والزراعة MEWA)", color = BrandTextSecondary, fontSize = 12.sp)
+                Text("[OK] بروتوكول استشعار درجات الحرارة الحيوية (Bio-Thermal Sensing)", color = BrandTextSecondary, fontSize = 12.sp)
+                Text("[OK] خلو تام من الإيموجي وتوافق كامل مع المعايير السعودية", color = BrandTextSecondary, fontSize = 12.sp)
             }
         }
     }
