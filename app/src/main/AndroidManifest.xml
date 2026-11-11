@@ -10,7 +10,7 @@
 
     <application
         android:allowBackup="true"
-        android:label="تطبيق رحلة الإيمان — إدارة شاملة لحملات الحج والعمرة"
+        android:label="نظام رعاية أليف — المنصة الموحدة لإدارة الرعاية البيطرية والتعريف الحيواني"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
         <activity
